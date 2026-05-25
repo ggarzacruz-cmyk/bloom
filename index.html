@@ -59,10 +59,10 @@ body{font-family:'DM Sans',sans-serif;background:#080f0c;display:flex;justify-co
 .msg-in{background:var(--card);color:var(--text);border-radius:4px 20px 20px 20px;padding:12px 16px;font-size:14px;line-height:1.5;max-width:78%;align-self:flex-start;box-shadow:0 1px 8px rgba(44,62,53,.07);}
 .msg-out{background:linear-gradient(135deg,#7BBFA3,#5BAA8A);color:#fff;border-radius:20px 4px 20px 20px;padding:12px 16px;font-size:14px;line-height:1.5;max-width:78%;align-self:flex-end;}
 .msg-sage{background:linear-gradient(135deg,rgba(123,191,163,.22),rgba(184,212,232,.18));border-left:3px solid #7BBFA3;border-radius:0 16px 16px 0;padding:14px 16px;font-size:13px;line-height:1.6;max-width:90%;align-self:flex-start;color:#E8F4EE;}
-.qopt{background:rgba(26,45,61,.08);border:1.5px solid rgba(26,45,61,.18);border-radius:14px;padding:13px 16px;margin-bottom:9px;cursor:pointer;font-size:14px;color:#1a2d3d;font-weight:500;transition:all .2s;}
-.qopt:hover{background:rgba(26,45,61,.14);border-color:rgba(26,45,61,.35);}
-.qopt.ok{background:rgba(123,191,163,.18);border-color:#7BBFA3;}
-.qopt.no{background:rgba(232,136,136,.14);border-color:#e88;}
+.qopt{background:#fff;border:1.5px solid rgba(26,45,61,.15);border-radius:14px;padding:13px 16px;margin-bottom:9px;cursor:pointer;font-size:14px;color:#1A2420;font-weight:600;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.qopt:hover{background:var(--inp);border-color:#4a9fc4;}
+.qopt.ok{background:rgba(123,191,163,.22);border-color:#7BBFA3;color:#1e3d2a;font-weight:700;}
+.qopt.no{background:rgba(232,136,136,.18);border-color:#e88;color:#5a1a1a;font-weight:700;}
 `;
 
 const DATA = {
@@ -558,7 +558,7 @@ function Lesson({onBack,dark,subject}){
   const answer=i=>{if(answered)return;setSel(i);setAnswered(true);};
   const next=()=>{if(step<steps.length-1){setStep(s=>s+1);setSel(null);setAnswered(false);}else onBack();};
 
-  return <div className="enter" style={{minHeight:"100%",paddingBottom:24}}>
+  return <div className="enter" style={{minHeight:"100%",paddingBottom:24,background:"#F9FAFB"}}>
     <div style={{background:`linear-gradient(160deg,${T.school},#1e3850)`,padding:"20px 24px 24px",borderRadius:"0 0 28px 28px"}}>
       <div onClick={onBack} style={{fontSize:13,color:"rgba(232,244,250,.6)",cursor:"pointer",marginBottom:12,display:"flex",alignItems:"center",gap:6}}>← Matemáticas</div>
       <div style={{fontSize:11,color:"rgba(232,244,250,.45)",textTransform:"uppercase",letterSpacing:".08em"}}>{subject} · {lessonData.title}</div>
@@ -569,15 +569,15 @@ function Lesson({onBack,dark,subject}){
       <div style={{fontSize:11,color:"rgba(232,244,250,.4)",marginTop:4}}>Paso {step+1} de {steps.length}</div>
     </div>
     <Pad c={<>
-      <div style={{fontSize:11,color:"var(--sub)",textTransform:"uppercase",letterSpacing:".08em",fontWeight:600,marginTop:20,marginBottom:6}}>Paso {step+1}: {cur.label}</div>
-      <div style={{fontFamily:"'Fraunces',serif",fontSize:20,color:"var(--text)",lineHeight:1.35,marginBottom:16}}>{cur.concept}</div>
+      <div style={{fontSize:11,color:"#1A2420",textTransform:"uppercase",letterSpacing:".08em",fontWeight:600,marginTop:20,marginBottom:6}}>Paso {step+1}: {cur.label}</div>
+      <div style={{fontFamily:"'Fraunces',serif",fontSize:20,color:"#1A2420",lineHeight:1.35,marginBottom:16}}>{cur.concept}</div>
       <div style={{background:"linear-gradient(135deg,#e8f4fa,#d4e8f5)",borderRadius:20,padding:24,textAlign:"center",marginBottom:20}}>
         <span style={{fontSize:cur.visual.length>2?52:72}}>{cur.visual}</span>
       </div>
       {cur.type==="info"&&<>
-        <div style={{fontSize:14,color:"var(--text)",lineHeight:1.7,marginBottom:20,opacity:.85}}>{cur.text}</div>
-        <div style={{background:"linear-gradient(135deg,rgba(123,191,163,.12),rgba(184,212,232,.1))",borderLeft:`3px solid ${T.moss}`,borderRadius:"0 16px 16px 0",padding:"14px 16px",display:"flex",gap:12,alignItems:"flex-start",marginBottom:24}}>
-          <SageAvatar size={32}/><div style={{fontSize:13,color:"var(--sub)",lineHeight:1.5}}><strong style={{color:T.moss}}>Sage:</strong> No hay prisa. Puedes volver a este paso cuando quieras 🌿</div>
+        <div style={{fontSize:14,color:"#1A2420",lineHeight:1.7,marginBottom:20,fontWeight:500}}>{cur.text}</div>
+        <div style={{background:"rgba(123,191,163,.15)",borderLeft:`3px solid ${T.moss}`,borderRadius:"0 16px 16px 0",padding:"14px 16px",display:"flex",gap:12,alignItems:"flex-start",marginBottom:24}}>
+          <SageAvatar size={32}/><div style={{fontSize:13,color:"#1A2420",lineHeight:1.5}}><strong style={{color:T.moss}}>Sage:</strong> No hay prisa. Puedes volver a este paso cuando quieras 🌿</div>
         </div>
         <button className="btn" style={{background:`linear-gradient(135deg,${T.schoolM},#2d7fa8)`}} onClick={next}>{step<steps.length-1?"Entendido, siguiente →":"¡Completé la lección! 🎉"}</button>
       </>}
@@ -585,16 +585,16 @@ function Lesson({onBack,dark,subject}){
         {cur.opts.map((o,i)=><div key={i} className={`qopt${answered&&i===cur.correct?" ok":""}${answered&&sel===i&&i!==cur.correct?" no":""}`} onClick={()=>answer(i)}>{o}{answered&&i===cur.correct&&" ✓"}</div>)}
         {answered&&<>
           <div style={{background:"linear-gradient(135deg,rgba(123,191,163,.12),rgba(184,212,232,.1))",borderLeft:`3px solid ${sel===cur.correct?T.moss:"#e88"}`,borderRadius:"0 16px 16px 0",padding:"14px 16px",display:"flex",gap:12,alignItems:"flex-start",marginTop:4,marginBottom:20}}>
-            <SageAvatar size={32}/><div style={{fontSize:13,color:"var(--sub)",lineHeight:1.5}}><strong style={{color:sel===cur.correct?T.moss:"#e88"}}>Sage:</strong> {sel===cur.correct?"¡Excelente! Tu razonamiento es correcto 🌟":"Casi. La respuesta correcta está marcada. ¡Cada error es aprendizaje! 🌱"}</div>
+            <SageAvatar size={32}/><div style={{fontSize:13,color:"#1A2420",lineHeight:1.5}}><strong style={{color:sel===cur.correct?T.moss:"#e88"}}>Sage:</strong> {sel===cur.correct?"¡Excelente! Tu razonamiento es correcto 🌟":"Casi. La respuesta correcta está marcada. ¡Cada error es aprendizaje! 🌱"}</div>
           </div>
           <button className="btn" style={{background:`linear-gradient(135deg,${T.schoolM},#2d7fa8)`}} onClick={next}>Continuar →</button>
         </>}
       </>}
       {cur.type==="celebrate"&&<>
-        <div style={{fontSize:14,color:"var(--text)",lineHeight:1.7,marginBottom:20,opacity:.85}}>{cur.text}</div>
+        <div style={{fontSize:14,color:"#1A2420",lineHeight:1.7,marginBottom:20,opacity:.85}}>{cur.text}</div>
         <div style={{background:"linear-gradient(135deg,rgba(123,191,163,.15),rgba(168,213,186,.1))",borderRadius:20,padding:20,textAlign:"center",marginBottom:20}}>
           <div style={{fontSize:13,color:T.moss,fontWeight:600,marginBottom:8}}>🏆 Lección completada</div>
-          <div style={{fontSize:12,color:"var(--sub)"}}>+50 XP · Insignia: Mente Matemática</div>
+          <div style={{fontSize:12,color:"#1A2420"}}>+50 XP · Insignia: Mente Matemática</div>
         </div>
         <button className="btn" onClick={onBack}>Volver a materias 📚</button>
       </>}
@@ -1098,8 +1098,8 @@ function App(){
   const bgStyle={
     "--bg": dark?T.night:T.snow,
     "--card": dark?T.nightCard:"#fff",
-    "--text": dark?T.nightText:T.deep,
-    "--sub": dark?"rgba(232,244,238,.5)":T.mid,
+    "--text": dark?"#F2FBF6":T.deep,
+    "--sub": dark?"rgba(232,244,238,.75)":T.mid,
     "--border": dark?"rgba(123,191,163,.1)":"rgba(168,213,186,.2)",
     "--inp": dark?"#1e2e28":T.mint,
   };
